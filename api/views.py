@@ -6,10 +6,10 @@ from rest_framework import status
 
 
 
-from .serializers import QuizSerializer, QuestionSerializer, OptionSerializer,Topicserilaizers
+from .serializers import QuizSerializer, QuestionSerializer, OptionSerializer,Topicserilaizers,StudentSerializer
 # Create your views here.
 
-from .models import Quiz, Question, Option, Topic
+from .models import Quiz, Question, Option, Topic,Student
 
 
 # View for get all quiz
@@ -88,6 +88,32 @@ class QuestionListView(APIView):
             return Response(serializer.data)
         else:
             return Response(serializer.errors)
+
+class StudentListView(APIView):
+    def post(self, request:Request):
+        data = request.data
+        serializer = StudentSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+            
+
+class StudentListView1(APIView):
+    def get(self, request:Request, chatid):
+        first_name = Student.objects.get(telegram_id=chatid)
+        serializer = StudentSerializer(first_name)
+        return Response(serializer.data)
+        
+class UpdaterStudent(APIView):
+    def post(self, request:Request,pk):
+        student = Student.objects.get(id=pk)
+        # print(student.list_question)'
+        student.list_question=request.data['list_question']
+        # print(request.data)
+        student.save()
+        return Response("ok")
 
 class OptionListViev(APIView):
     def post(self, request:Request):
