@@ -5,11 +5,12 @@ class Student(models.Model):
     last_name = models.CharField(max_length=200, null=True, blank=True)
     telegram_id = models.IntegerField(unique=True)
     username = models.CharField(max_length=200, null=True, blank=True)
+    list_question = models.JSONField(max_length=200, null=True, blank=True)
     
 
 
     def __str__(self):
-        return self.name
+        return self.first_name
 
 
 
