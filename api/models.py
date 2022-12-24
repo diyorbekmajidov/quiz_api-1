@@ -60,7 +60,7 @@ class Result(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.student.name
+        return self.student.first_name
 class ResultDetail(models.Model):
     result = models.ForeignKey(Result, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
